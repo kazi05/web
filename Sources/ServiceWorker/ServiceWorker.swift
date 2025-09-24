@@ -8,9 +8,10 @@
 import Foundation
 import JavaScriptKit
 
-private var serviceworker: ServiceWorker!
+@MainActor private var serviceworker: ServiceWorker!
 
 /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+@MainActor
 open class ServiceWorker {
     private var isStarted = false
     

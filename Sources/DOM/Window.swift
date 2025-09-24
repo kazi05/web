@@ -8,8 +8,9 @@
 import WebFoundation
 import Events
 
-private var _shared: Window?
+@MainActor private var _shared: Window?
 
+@MainActor
 public class Window: EventListenerCompatibleObject, EventTarget {
     public lazy var storage: Storage = .init()
     public var jsValue: JSValue { domElement }

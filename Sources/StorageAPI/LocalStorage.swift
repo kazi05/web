@@ -7,8 +7,9 @@
 
 import WebFoundation
 
-private var _shared: LocalStorage?
+@MainActor private var _shared: LocalStorage?
 
+@MainActor
 public final class LocalStorage {
     public static var shared: LocalStorage {
         guard let shared = _shared else {

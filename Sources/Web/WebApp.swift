@@ -8,8 +8,9 @@
 import Foundation
 import CSS
 
-private var webapp: WebApp!
+@MainActor private var webapp: WebApp!
 
+@MainActor
 open class WebApp {
     public typealias Configuration = AppBuilder.Content
     

@@ -8,14 +8,20 @@
 import Foundation
 import JavaScriptKit
 
-private var dispatch = Dispatch()
+@MainActor
+private final class DispatchStorage {
+    var functions: [String: JSClosure] = [:]
+}
 
-public struct Dispatch {
-    fileprivate var functions: [String: JSClosure] = [:]
+@MainActor
+private let dispatchStorage = DispatchStorage()
+
+@MainActor
+public enum Dispatch {
     
     /// Set timeout JavaScript function which executes after 0 seconds.
     /// - Parameter closure: Closure to execute.
-    public static func async(_ closure: @escaping () -> Void) {
+    public static func async(_ closure: @Sendable @escaping () -> Void) {
         asyncAfter(0, closure)
     }
     
@@ -23,7 +29,7 @@ public struct Dispatch {
     /// - Parameters:
     ///   - time: Time in seconds.
     ///   - closure: Closure to execute.
-    public static func asyncAfter(_ time: Double, _ closure: @escaping () -> Void) {
+    public static func asyncAfter(_ time: Double, _ closure: @Sendable @escaping () -> Void) {
         #if arch(wasm32)
         let uid = String.shuffledAlphabet(8)
         var function: JSClosure!
@@ -32,16 +38,19 @@ public struct Dispatch {
             #if JAVASCRIPTKIT_WITHOUT_WEAKREFS
             function.release()
             #endif
-            dispatch.functions[uid] = nil
+            dispatchStorage.functions[uid] = nil
             return .null
         }
-        dispatch.functions[uid] = function
+        dispatchStorage.functions[uid] = function
         _ = JSObject.global.setTimeout!(function, time * 1_000)
         #else
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Int(time)), execute: closure)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Int(time))) {
+            closure()
+        }
         #endif
     }
-    
+
+    @MainActor
     public struct IntervalTask {
         let object: JSValue
         let invalidateHandler: () -> Void
@@ -68,7 +77,7 @@ public struct Dispatch {
                 closure(task)
             } else {
                 task = IntervalTask(timer) {
-                    dispatch.functions[uid] = nil
+                    dispatchStorage.functions[uid] = nil
                     #if JAVASCRIPTKIT_WITHOUT_WEAKREFS
                     function.release()
                     #endif
@@ -77,7 +86,7 @@ public struct Dispatch {
             }
             return .null
         }
-        dispatch.functions[uid] = function
+        dispatchStorage.functions[uid] = function
         timer = JSObject.global.setInterval!(function, time * 1_000)
         #endif
     }

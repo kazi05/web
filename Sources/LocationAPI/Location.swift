@@ -7,9 +7,10 @@
 
 import WebFoundation
 
-private var _shared: Location?
+@MainActor private var _shared: Location?
 
 /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/Location)
+@MainActor
 public final class Location: InnerStateChangeable, Equatable {
     public static var shared: Location {
         guard let shared = _shared else {

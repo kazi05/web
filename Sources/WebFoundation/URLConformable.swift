@@ -20,7 +20,7 @@ extension String: URLConformable {
     public var stringValue: String { self }
 }
 
-extension URL: URLConformable {
+@retroactive extension URL: URLConformable {
 	public var stringValue: String { self.absoluteString }
 }
 
