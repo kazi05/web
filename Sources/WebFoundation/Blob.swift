@@ -86,24 +86,24 @@ public class Blob: JSClass, CustomStringConvertible {
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/Blob/text)
     public func text(_ closure: @escaping (Result<String, Error>) -> Void) {
         guard let promise = jsValue.text.function?.callAsFunction(optionalThis: jsValue.object)?.object else { return }
-        JSPromise(promise)?.then(success: { value in
+        JSPromise(promise)?.then { value in
             closure(.success(value.string ?? ""))
-            return JSValue.undefined
-        }, failure: { error in
-            closure(.failure(error))
-            return JSValue.undefined
-        })
+            return .undefined
+        } failure: { value in
+            closure(.failure(JSException(message: value.string ?? "")))
+            return .undefined
+        }
     }
     
     /// Returns a promise that resolves with an `ArrayBuffer` containing the entire contents of the `Blob` as binary data.s
     public func arrayBuffer(_ closure: @escaping (Result<ArrayBuffer, Error>) -> Void) {
         guard let promise = jsValue.arrayBuffer.function?.callAsFunction(optionalThis: jsValue.object)?.object else { return }
-        JSPromise(promise)?.then(success: { value in
+        JSPromise(promise)?.then { value in
             closure(.success(ArrayBuffer(value)))
             return JSValue.undefined
-        }, failure: { error in
-            closure(.failure(error))
-            return JSValue.undefined
-        })
+        } failure: { value in
+            closure(.failure(JSException(message: value.string ?? "")))
+            return .undefined
+        }
     }
 }

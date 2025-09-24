@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:6.1
 
 import PackageDescription
 import Foundation
@@ -53,7 +53,7 @@ extension Target.Dependency {
 var deps: [Dep] = []
 
 deps.append(
-	.github("swiftwasm/JavaScriptKit", exact: "0.17.0"),
+	.github("swiftwasm/JavaScriptKit", exact: "0.36.0"),
 		.product("JavaScriptKit", "JavaScriptKit"),
 		.product("JavaScriptBigIntSupport", "JavaScriptKit")
 )
@@ -62,6 +62,7 @@ deps.append(
 
 let package = Package(
     name: "web",
+    platforms: [.macOS(.v10_15), .iOS(.v13)],
     products: [
         .library(name: "WebFoundation", type: .static, targets: ["WebFoundation"]),
         .library(name: "Events", type: .static, targets: ["Events"]),
