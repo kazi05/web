@@ -24,6 +24,7 @@ internal struct DefaultResponder: Responder {
     private let notFoundResponder: (any Responder)?
 
     /// Creates a new `ApplicationResponder`
+    @MainActor
     init(routes: RoutesStorage, notFoundResponder: (any Responder)? = nil, middleware: [Middleware] = []) {
         let options = routes.caseInsensitive ?
             Set(arrayLiteral: TrieRouter<CachedRoute>.ConfigurationOption.caseInsensitive) : []
@@ -74,12 +75,14 @@ internal struct DefaultResponder: Responder {
 }
 
 extension DefaultResponder {
+    @MainActor 
     static var notFoundResponder: any Responder {
         NotFoundResponder()
     }
 }
 
-private struct NotFoundResponder: Responder {
+private struct NotFoundResponder: @MainActor Responder {
+    @MainActor
     func respond(to request: Request) throws -> AnyPageController? {
         NotFoundPageController()
     }

@@ -12,6 +12,7 @@ extension Language: RenderBuilderContent {
     public var renderBuilderContent: Preview.Item { .language(self) }
 }
 
+@MainActor 
 open class WebPreview {
     @available(*, deprecated, message: "🧨 This variable is deprecated and not working. Please switch to `Language.en` in the @Preview content body declaration.")
     open class var language: Language { .en }

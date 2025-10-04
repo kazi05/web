@@ -7,6 +7,6 @@
 
 import CSS
 
-extension Stylesheet: AppBuilderContent {
+extension Stylesheet: @MainActor AppBuilderContent {
     public var appBuilderContent: AppBuilder.Item { .stylesheet(self) }
 }

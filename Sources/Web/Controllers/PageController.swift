@@ -18,7 +18,8 @@ public protocol AnyPageController: AnyObject {
     var controller: PageController { get }
 }
 
-open class PageController: BaseContentElement, AnyPageController {
+@MainActor
+open class PageController: BaseContentElement, @MainActor AnyPageController {
     open override class var name: String { "div" }
     
     open class var fragmentRoutes: [FragmentRoutes] { [] }

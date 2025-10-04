@@ -8,11 +8,13 @@
 import WebFoundation
 import CSS
 
-public enum AppStyles: WebPreviewRenderable, RenderBuilderContent {
+public enum AppStyles: @MainActor WebPreviewRenderable, @MainActor RenderBuilderContent {
     case all, enabled, disabled, ids([Id]), id(Id), classes([Class]), `class`(Class)
     
+    @MainActor
     public var renderBuilderContent: Preview.Item { .item(self) }
     
+    @MainActor
     public func renderPreview(singleQuotes: Bool) -> String {
         #if arch(wasm32)
         return ""

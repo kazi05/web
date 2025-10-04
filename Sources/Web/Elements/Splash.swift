@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class Splash: Div, AppBuilderContent {
+open class Splash: Div, @MainActor AppBuilderContent {
     public var appBuilderContent: AppBuilder.Item { .splash(self) }
     
     open override class var name: String { "div" }

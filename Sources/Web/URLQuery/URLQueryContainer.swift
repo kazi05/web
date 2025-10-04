@@ -18,10 +18,12 @@ public protocol URLQueryContainer {
 }
 
 extension URLQueryContainer {
+    @MainActor
     private func configuredEncoder() -> URLQueryEncoder{
         URLEncodedFormEncoder()
     }
     
+    @MainActor
     private func configuredDecoder() -> URLQueryDecoder{
         URLEncodedFormDecoder()
     }
@@ -38,6 +40,7 @@ extension URLQueryContainer {
     /// - parameters:
     ///     - content: `Content` type to encode to this HTTP message.
     /// - throws: Any errors making the decoder for this media type or serializing the query string.
+    @MainActor
     public mutating func encode<C: Codable>(_ content: C) throws {
         try self.encode(content, using: self.configuredEncoder())
     }
@@ -53,6 +56,7 @@ extension URLQueryContainer {
     ///     - content: `Content` type to decode from this HTTP message.
     /// - returns: Instance of the `Decodable` type.
     /// - throws: Any errors making the decoder for this media type or parsing the query string.
+    @MainActor
     public func decode<C: Codable>(_ content: C.Type) throws -> C {
         try decode(C.self, using: configuredDecoder())
     }
@@ -67,6 +71,7 @@ extension URLQueryContainer {
     /// - parameters:
     ///     - encodable: `Encodable` type to encode to this HTTP message.
     /// - throws: Any errors making the decoder for this media type or serializing the query string.
+    @MainActor
     public mutating func encode<E: Encodable>(_ encodable: E) throws {
         try encode(encodable, using: configuredEncoder())
     }
@@ -82,6 +87,7 @@ extension URLQueryContainer {
     ///     - decodable: `Decodable` type to decode from this HTTP message.
     /// - returns: Instance of the `Decodable` type.
     /// - throws: Any errors making the decoder for this media type or parsing the query string.
+    @MainActor
     public func decode<D: Decodable>(_ decodable: D.Type) throws -> D {
         try decode(D.self, using: configuredDecoder())
     }
@@ -98,6 +104,7 @@ extension URLQueryContainer {
     /// - parameters:
     ///     - keyPath: One or more key path components to the desired value.
     /// - returns: Decoded `Decodable` value.
+    @MainActor 
     public subscript<D: Decodable>(_ keyPath: CodingKeyRepresentable...) -> D? {
         self[D.self, at: keyPath]
     }
@@ -113,6 +120,7 @@ extension URLQueryContainer {
     ///     - type: The `Decodable` value type to decode.
     ///     - keyPath: One or more key path components to the desired value.
     /// - returns: Decoded `Decodable` value.
+    @MainActor
     public subscript<D: Decodable>(_ type: D.Type, at keyPath: CodingKeyRepresentable...) -> D? {
         self[D.self, at: keyPath]
     }
@@ -128,6 +136,7 @@ extension URLQueryContainer {
     ///     - type: The `Decodable` value type to decode.
     ///     - keyPath: One or more key path components to the desired value.
     /// - returns: Decoded `Decodable` value.
+    @MainActor
     public subscript<D: Decodable>(_ type: D.Type, at keyPath: [CodingKeyRepresentable]) -> D? {
         try? get(type, at: keyPath)
     }
@@ -141,6 +150,7 @@ extension URLQueryContainer {
     ///     - type: The `Decodable` value type to decode.
     ///     - keyPath: One or more key path components to the desired value.
     /// - returns: Decoded `Decodable` value.
+    @MainActor
     public func get<D: Decodable>(_ type: D.Type = D.self, at keyPath: CodingKeyRepresentable...) throws -> D {
         try get(type, at: keyPath)
     }
@@ -156,6 +166,7 @@ extension URLQueryContainer {
     ///     - type: The `Decodable` value type to decode.
     ///     - keyPath: One or more key path components to the desired value.
     /// - returns: Decoded `Decodable` value.
+    @MainActor
     public func get<D: Decodable>(_ type: D.Type = D.self, at keyPath: [CodingKeyRepresentable]) throws -> D {
         try self.decode(SingleValueDecoder.self).get(at: keyPath.map { $0.codingKey })
     }

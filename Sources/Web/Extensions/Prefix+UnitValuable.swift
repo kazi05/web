@@ -8,6 +8,6 @@
 import CSS
 
 prefix operator -
-public prefix func -<U>(rhs: U) -> UnitValue where U: UnitValuable {
+@MainActor public prefix func -<U>(rhs: U) -> UnitValue where U: UnitValuable {
     UnitValue(-1 * rhs.value.doubleValue, rhs.unit)
 }

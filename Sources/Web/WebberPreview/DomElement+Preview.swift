@@ -9,7 +9,7 @@ import WebFoundation
 import DOM
 import CSS
 
-extension BaseElement: WebPreviewRenderable, RenderBuilderContent {
+extension BaseElement: @MainActor WebPreviewRenderable, @MainActor RenderBuilderContent {
     public var renderBuilderContent: Preview.Item { .item(self) }
 }
 

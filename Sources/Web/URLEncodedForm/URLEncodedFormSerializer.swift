@@ -18,6 +18,7 @@ struct URLEncodedFormSerializer {
         self.splitKeyValueOn = splitKeyValueOn
     }
     
+    @MainActor 
     func serialize(_ data: URLEncodedFormData, codingPath: [CodingKey] = []) throws -> String {
         var entries: [String] = []
         let key = try codingPath.toURLEncodedKey()
@@ -51,6 +52,7 @@ struct URLEncodedFormSerializer {
 }
 
 extension Array where Element == CodingKey {
+    @MainActor
     func toURLEncodedKey() throws -> String {
         if count < 1 {
             return ""
@@ -65,6 +67,7 @@ extension Array where Element == CodingKey {
 
 extension String {
     /// Prepares a `String` for inclusion in form-urlencoded data.
+    @MainActor
     func urlEncoded(codingPath: [CodingKey] = []) throws -> String {
         guard let result = self.addingPercentEncoding(
             withAllowedCharacters: _allowedCharacters
@@ -79,6 +82,7 @@ extension String {
 }
 
 /// Characters allowed in form-urlencoded data.
+@MainActor
 private var _allowedCharacters: CharacterSet = {
     var allowed = CharacterSet.urlQueryAllowed
     // these symbols are reserved for url-encoded form

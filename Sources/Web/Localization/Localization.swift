@@ -7,8 +7,10 @@
 
 import Foundation
 
+@MainActor
 private var localization = Localization()
 
+@MainActor 
 public class Localization {
     let currentLocaleIdentifier = WebApp.shared.window.navigator.language?.replacingOccurrences(of: "-", with: "_") ?? "en_US"
     

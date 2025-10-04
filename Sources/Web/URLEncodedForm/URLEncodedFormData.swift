@@ -19,6 +19,7 @@ enum URLQueryFragment: ExpressibleByStringLiteral, Equatable {
     case urlDecoded(String)
     
     /// Returns the URL Encoded version
+    @MainActor 
     func asUrlEncoded() throws -> String {
         switch self {
         case .urlEncoded(let encoded):

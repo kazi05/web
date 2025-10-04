@@ -14,6 +14,7 @@ public typealias Page = Routes.Page
 public final class FragmentRoutes {
     let routes = RoutesStorage()
     
+    @MainActor 
     public init (@RoutesFactory content: @escaping RoutesFactory.Block) {
         Routes.parse(routes, content().routesFactoryContent)
     }
@@ -101,7 +102,8 @@ public class FragmentRouter: DOMContent {
     }
 }
 
-public class Routes: AppBuilderContent {
+@MainActor
+public class Routes: @MainActor AppBuilderContent {
     public var appBuilderContent: AppBuilder.Item { .routes(self) }
     
     let item: RoutesFactory.Item
@@ -149,7 +151,8 @@ public class Routes: AppBuilderContent {
 }
 
 extension Routes {
-    public class Group: RoutesFactoryContent {
+    @MainActor
+    public class Group: @MainActor RoutesFactoryContent {
         public var routesFactoryContent: RoutesFactory.Item { .group(self) }
         
         let path: [String]

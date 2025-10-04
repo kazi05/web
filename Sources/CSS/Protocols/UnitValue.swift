@@ -17,7 +17,7 @@ public protocol UnitValuable: AnyUnitValuable {
 }
 
 @MainActor
-public class UnitValue:@MainActor  UnitValuable, @MainActor UniValue, @MainActor _PropertyValueInnerChangeable, @preconcurrency CustomStringConvertible {
+public class UnitValue: @MainActor  UnitValuable, @MainActor UniValue, @MainActor _PropertyValueInnerChangeable, @preconcurrency CustomStringConvertible {
     @State public var value: Double = 0
     @State public var unit: Unit = .px
     

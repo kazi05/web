@@ -18,6 +18,7 @@ extension RoutesBuilder {
     /// - parameters:
     ///     - middleware: Variadic `Middleware` to wrap `Router` in.
     /// - returns: New `Router` wrapped in `Middleware`.
+    @MainActor 
     public func grouped(_ middleware: Middleware...) -> RoutesBuilder {
         grouped(middleware)
     }
@@ -32,6 +33,7 @@ extension RoutesBuilder {
     /// - parameters:
     ///     - middleware: Variadic `Middleware` to wrap `Router` in.
     ///     - configure: Closure to configure the newly created `Router`.
+    @MainActor
     public func group(_ middleware: Middleware..., configure: (RoutesBuilder) throws -> ()) rethrows {
         try group(middleware, configure: configure)
     }
@@ -45,6 +47,7 @@ extension RoutesBuilder {
     /// - parameters:
     ///     - middleware: Array of `[Middleware]` to wrap `Router` in.
     /// - returns: New `Router` wrapped in `Middleware`.
+    @MainActor
     public func grouped(_ middleware: [Middleware]) -> RoutesBuilder {
         guard middleware.count > 0 else {
             return self
@@ -62,6 +65,7 @@ extension RoutesBuilder {
     /// - parameters:
     ///     - middleware: Array of `[Middleware]` to wrap `Router` in.
     ///     - configure: Closure to configure the newly created `Router`.
+    @MainActor
     public func group(_ middleware: [Middleware], configure: (RoutesBuilder) throws -> ()) rethrows {
         try configure(MiddlewareGroup(root: self, middleware: middleware))
     }
@@ -70,7 +74,7 @@ extension RoutesBuilder {
 // MARK: Private
 
 /// Middleware grouping route.
-private final class MiddlewareGroup: RoutesBuilder {
+private final class MiddlewareGroup: @MainActor RoutesBuilder {
     /// Router to cascade to.
     let root: RoutesBuilder
 
@@ -84,6 +88,7 @@ private final class MiddlewareGroup: RoutesBuilder {
     }
     
     /// See `HTTPRoutesBuilder`.
+    @MainActor
     func add(_ route: any AnyRoute) {
         route.responder = middleware.makeResponder(chainingTo: route.responder)
         root.add(route)

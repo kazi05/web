@@ -12,6 +12,7 @@ import Foundation
 /// mutating both incoming requests and outgoing responses. `Middleware` can choose
 /// to pass requests on to the next `Middleware` in a chain, or they can short circuit and
 /// return a custom `Response` if desired.
+@MainActor
 public protocol Middleware {
     /// Called with each `Request` that passes through this middleware.
     /// - parameters:
@@ -24,6 +25,7 @@ public protocol Middleware {
 extension Array where Element == Middleware {
     /// Wraps a `Responder` in an array of `Middleware` creating a new `Responder`.
     /// - note: The array of middleware must be `[Middleware]` not `[M] where M: Middleware`.
+    @MainActor
     public func makeResponder(chainingTo responder: any Responder) -> any Responder {
         var responder = responder
         for middleware in reversed() {
@@ -40,7 +42,7 @@ public extension Middleware {
     }
 }
 
-private struct HTTPMiddlewareResponder: Responder {
+private struct HTTPMiddlewareResponder: @MainActor Responder {
     var middleware: Middleware
     var responder: any Responder
     
@@ -49,6 +51,7 @@ private struct HTTPMiddlewareResponder: Responder {
         self.responder = responder
     }
     
+    @MainActor
     func respond(to request: Request) throws -> AnyPageController? {
         middleware.respond(to: request, chainingTo: responder)
     }

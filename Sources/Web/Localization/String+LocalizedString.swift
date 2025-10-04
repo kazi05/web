@@ -8,10 +8,12 @@
 import Foundation
 
 extension String {
+    @MainActor 
 	public init (_ ls: LocalizedString...) {
 		self.init(ls)
 	}
 	
+    @MainActor
 	public init (_ ls: [LocalizedString]) {
 		guard ls.count > 0 else {
 			self.init("")
@@ -53,11 +55,13 @@ extension String {
 }
 
 /// Dynamic localized string
+@MainActor
 public func LString(_ ls: LocalizedString...) -> State<String> {
 	LString(ls)
 }
 
 /// Dynamic localized string
+@MainActor
 public func LString(_ ls: [LocalizedString]) -> State<String> {
 	let state: State<String> = .init(wrappedValue: .init(ls))
 	Localization.currentState.listen {

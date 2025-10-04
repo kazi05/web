@@ -8,8 +8,10 @@
 import Foundation
 import CSS
 
+@MainActor
 private var webapp: WebApp!
 
+@MainActor
 open class WebApp {
     public typealias Configuration = AppBuilder.Content
     
@@ -452,11 +454,13 @@ extension WebApp {
 
 extension WindowLifecycle {
     /// Called when app just started
+    @MainActor
     public func didFinishLaunching(_ handler: @escaping (WebApp) -> Void) -> Self {
         didFinishLaunching({ handler(WebApp.shared) })
     }
     
     /// Called when app just started
+    @MainActor 
     public static func didFinishLaunching(_ handler: @escaping (WebApp) -> Void) -> Self {
         Self.didFinishLaunching({ handler(WebApp.shared) })
     }
