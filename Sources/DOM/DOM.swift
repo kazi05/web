@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol DOMContent {
     var domContentItem: DOMItem { get }
 }
@@ -38,7 +39,7 @@ extension String: DOMContent {
 /// }
 /// ````
 ///
-@resultBuilder public struct DOM {
+@resultBuilder @MainActor public struct DOM {
     public static var isForCrawler: Bool { JSObject.global.isCrawlServer.boolean ?? false }
 
     public typealias Content = DOMContent

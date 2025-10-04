@@ -7,9 +7,11 @@
 
 import WebFoundation
 
+@MainActor
 private var _shared: SessionStorage?
 
 // It is more secure to just use swift dictionary, cause it will be not available for user
+@MainActor
 public final class SessionStorage {
     public static var shared: SessionStorage {
         guard let shared = _shared else {

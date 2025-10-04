@@ -7,7 +7,7 @@
 
 import WebFoundation
 
-public struct ValueWithTimeUnit<V: Doubleable>: TimeUnitValue, UniValue, PropertyValueImportantable {
+public struct ValueWithTimeUnit<V: Doubleable>: TimeUnitValue, UniValue, @MainActor PropertyValueImportantable {
     public let value: V
     public let timeUnit: TimeUnit
     
@@ -16,7 +16,7 @@ public struct ValueWithTimeUnit<V: Doubleable>: TimeUnitValue, UniValue, Propert
         self.timeUnit = timeUnit
     }
     
-    public var important: Self { .init(value, timeUnit.important) }
+    @MainActor public var important: Self { .init(value, timeUnit.important) }
     
     public var uniValue: TimeUnitValueContainer { TimeUnitValueContainer(value.doubleValue, timeUnit) }
     public var uniStateValue: State<TimeUnitValueContainer>? { nil }

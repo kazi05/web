@@ -15,7 +15,7 @@ import WebFoundation
 /// There are two types of length units: absolute and relative.
 ///
 /// [Learn more](https://www.w3schools.com/cssref/css_units.asp)
-public struct Unit: UniValue, _StringPropertyValue, PropertyValueImportantable {
+public struct Unit: @MainActor UniValue, @MainActor  _StringPropertyValue, @MainActor PropertyValueImportantable {
     let value: String
     
     init (_ value: String) {

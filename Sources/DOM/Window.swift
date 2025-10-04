@@ -8,6 +8,7 @@
 import WebFoundation
 import Events
 
+@MainActor
 private var _shared: Window?
 
 public class Window: EventListenerCompatibleObject, EventTarget {
@@ -83,7 +84,7 @@ public class Window: EventListenerCompatibleObject, EventTarget {
     /// The localStorage property is read-only.
     ///
     /// Tip: Also look at the sessionStorage property which stores data for one session (data is lost when the browser tab is closed).
-    public private(set) lazy var localStorage = LocalStorage.shared
+    @MainActor public private(set) lazy var localStorage = LocalStorage.shared
     
     /// The location object contains information about the current URL.
     ///
@@ -103,7 +104,7 @@ public class Window: EventListenerCompatibleObject, EventTarget {
     ///
     /// Tip: Also look at the localStorage property which stores data with no expiration date.
     /// The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
-    public private(set) lazy var sessionStorage = SessionStorage.shared
+    @MainActor public private(set) lazy var sessionStorage = SessionStorage.shared
     
     /// We should hold event listeners in this array
     private var eventListeners: [EventListener] = []
@@ -129,6 +130,7 @@ public class Window: EventListenerCompatibleObject, EventTarget {
     private var isAppStarted = false
     
     /// Have to be called only once right after App launch
+    @MainActor 
     public func appDidStarted() {
         guard !isAppStarted else { return }
         isAppStarted = true

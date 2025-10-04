@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class Size: InnerStateChangeable, Equatable, CustomStringConvertible {
+public final class Size: InnerStateChangeable, @preconcurrency Equatable, @preconcurrency CustomStringConvertible {
     @State public var width: Double = 0
     @State public var height: Double = 0
     

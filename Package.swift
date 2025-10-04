@@ -1,4 +1,4 @@
-// swift-tools-version:6.1
+// swift-tools-version:6.2
 
 import PackageDescription
 import Foundation
@@ -53,7 +53,7 @@ extension Target.Dependency {
 var deps: [Dep] = []
 
 deps.append(
-	.github("swiftwasm/JavaScriptKit", exact: "0.36.0"),
+	.github("swiftwasm/JavaScriptKit", "0.36.0"),
 		.product("JavaScriptKit", "JavaScriptKit"),
 		.product("JavaScriptBigIntSupport", "JavaScriptKit")
 )
@@ -70,7 +70,6 @@ let package = Package(
         .library(name: "DOM", type: .static, targets: ["DOM"]),
         .library(name: "CSS", type: .static, targets: ["CSS"]),
         .library(name: "Web", type: .static, targets: ["Web"]),
-        .library(name: "ARIA", type: .static, targets: ["ARIA"]),
         .library(name: "ServiceWorker", type: .static, targets: ["ServiceWorker"]),
         .library(name: "Worker", type: .static, targets: ["Worker"]),
         .library(name: "SharedWorker", type: .static, targets: ["SharedWorker"]),
@@ -137,11 +136,6 @@ let package = Package(
             .target(name: "WebSocketAPI"),
             .target(name: "XMLHttpRequest"),
             .target(name: "ResizeObserverAPI")
-        ]),
-        .target(name: "ARIA", dependencies: [
-            .target(name: "WebFoundation"),
-            .target(name: "DOM"),
-            .target(name: "CSS")
         ]),
         .target(name: "ServiceWorker", dependencies: [
             .target(name: "WebFoundation"),

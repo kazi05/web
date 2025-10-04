@@ -564,10 +564,12 @@ public final class BackgroundSizeType: Autoable, Initialable, Inheritable, Lengt
         }
     }
     
+    @MainActor
     convenience init <D>(_ value: D, _ unit: Unit) where D: UniValue, D.UniValue == Double {
         self.init(UnitValue(value, unit).description)
     }
     
+    @MainActor
     convenience init <D>(_ value: D, _ unit: State<Unit>) where D: UniValue, D.UniValue == Double {
         self.init(UnitValue(value, unit).description)
     }
@@ -643,14 +645,14 @@ public struct BorderImageSliceType: Initialable, Inheritable, Percentable, Prope
     public var description: String { value }
 }
 
-public final class BorderRadiusType: Initialable, Inheritable, Lengthable, Percentable, PropertyValueImportantable, _StringPropertyValue, _PropertyValueInnerChangeable {
+public final class BorderRadiusType: @MainActor Initialable, @MainActor Inheritable, @MainActor Lengthable, @MainActor Percentable, @MainActor PropertyValueImportantable, @MainActor _StringPropertyValue, @MainActor _PropertyValueInnerChangeable {
     @State public var value: String
     
     var _changeHandler = {}
     
-    required public init (_ value: String) { self.value = value }
+    @MainActor required public init (_ value: String) { self.value = value }
     
-    public var description: String { value }
+    @MainActor public var description: String { value }
 }
 
 public struct BorderStyleType: Noneable, Initialable, Inheritable, PropertyValueImportantable, _StringPropertyValue {
@@ -953,7 +955,7 @@ public struct ColumnSpanType: Initialable, Inheritable, Noneable, PropertyValueI
     public var description: String { value }
 }
 
-public struct ContentType: Initialable, Inheritable, Noneable, PropertyValueImportantable, _StringPropertyValue, ExpressibleByStringLiteral {
+public struct ContentType: Initialable, Inheritable, Noneable, PropertyValueImportantable, @MainActor _StringPropertyValue, @preconcurrency ExpressibleByStringLiteral {
     public let value: String
     
     public init (_ value: String) { self.value = value }
@@ -1501,7 +1503,7 @@ public struct FontLanguageOverrideType: Initialable, Inheritable, PropertyValueI
     public var description: String { value }
 }
 
-public struct FontSizeAdjustType: Noneable, PropertyValueImportantable, _StringPropertyValue, ExpressibleByStringLiteral {
+public struct FontSizeAdjustType: Noneable, PropertyValueImportantable, _StringPropertyValue, @preconcurrency ExpressibleByStringLiteral {
     public let value: String
     
     public init(stringLiteral value: StringLiteralType) { self.value = value }
@@ -2820,7 +2822,7 @@ public struct TextShadowType: Noneable, Initialable, Inheritable, PropertyValueI
     
     public init (_ value: String) { self.value = value }
     
-    public static func value<H: UnitValuable, V: UnitValuable, B: UnitValuable>(_ hShadow: H, _ vShadow: V, _ blurRadius: B, _ color: Color) -> TextShadowType {
+    @MainActor public static func value<H: UnitValuable, V: UnitValuable, B: UnitValuable>(_ hShadow: H, _ vShadow: V, _ blurRadius: B, _ color: Color) -> TextShadowType {
         .init(buildValue(h: hShadow.description, v: vShadow.description, blur: blurRadius.description, color: color.description))
     }
     
@@ -2886,7 +2888,7 @@ public struct TextUnderlinePositionType: Autoable, PropertyValueImportantable, _
     public var description: String { value }
 }
 
-public final class TimeType: Initialable, Inheritable, PropertyValueImportantable, _StringPropertyValue, _PropertyValueInnerChangeable {
+public final class TimeType: Initialable, Inheritable, PropertyValueImportantable, @MainActor _StringPropertyValue, _PropertyValueInnerChangeable {
     @State public var value = ""
     
     var _changeHandler = {}
@@ -2919,7 +2921,7 @@ public final class TimeType: Initialable, Inheritable, PropertyValueImportantabl
     
     /// Specifies how many seconds or milliseconds a transition effect takes to complete.
     /// Default value is 0s, meaning there will be no effect
-    public static func seconds<A>(_ v: A) -> Self where A: StateConvertible, A.Value == Double {
+    @MainActor public static func seconds<A>(_ v: A) -> Self where A: StateConvertible, A.Value == Double {
         self.init(TimeUnitValueContainer(v.stateValue, TimeUnit.s))
     }
     
@@ -2929,7 +2931,7 @@ public final class TimeType: Initialable, Inheritable, PropertyValueImportantabl
     
     /// Specifies how many seconds or milliseconds a transition effect takes to complete.
     /// Default value is 0s, meaning there will be no effect
-    public static func milliseconds<A>(_ v: A) -> Self where A: StateConvertible, A.Value == Double {
+    @MainActor public static func milliseconds<A>(_ v: A) -> Self where A: StateConvertible, A.Value == Double {
         self.init(TimeUnitValueContainer(v.stateValue, TimeUnit.ms))
     }
     

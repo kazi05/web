@@ -6,11 +6,11 @@
 //
 
 extension State {
-    public func map<Result>(_ expression: @escaping () -> Result) -> State<Result> {
+    @MainActor public func map<Result>(_ expression: @escaping () -> Result) -> State<Result> {
         .init(self, expression)
     }
     
-    public func map<Result>(_ expression: @escaping (Value) -> Result) -> State<Result> {
+    @MainActor public func map<Result>(_ expression: @escaping (Value) -> Result) -> State<Result> {
         .init(self, expression)
     }
 }
@@ -36,6 +36,7 @@ public class AnyStates {
 }
 
 extension Array where Element == AnyState {
+    @MainActor
     public func map<Result>(_ expression: @escaping () -> Result) -> State<Result> {
         let state = State<Result>.init(wrappedValue: expression())
         AnyStates(self) { [weak state] in

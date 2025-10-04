@@ -16,6 +16,7 @@ import ChannelMessagingAPI
 /// as long as those workers are hosted at the same origin as the parent page.
 ///
 /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/Worker)
+@MainActor
 open class Worker: AbstractWorker, EventTarget {
     public lazy var storage: Storage = .init()
     
@@ -199,6 +200,8 @@ open class Worker: AbstractWorker, EventTarget {
     }
     
     deinit {
-        shutdown()
+        MainActor.assumeIsolated {
+            shutdown()
+        }
     }
 }

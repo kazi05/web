@@ -8,6 +8,7 @@
 import Foundation
 import JavaScriptKit
 
+@MainActor
 open class BaseActiveStringElement: BaseActiveElement, _StringInitializable {
     var value: String {
         get { innerText }

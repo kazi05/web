@@ -10,7 +10,7 @@ import StreamsAPI
 
 public class RequestOptions {
     public var jsValue: JSValue {
-        var jsValue = [:].jsValue
+        var jsValue = [String: String]().jsValue
         jsValue.method = method.rawValue.jsValue
         jsValue.headers = headers
         if let body {

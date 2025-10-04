@@ -8,8 +8,10 @@
 import Foundation
 import JavaScriptKit
 
+@MainActor
 private var dispatch = Dispatch()
 
+@MainActor
 public struct Dispatch {
     fileprivate var functions: [String: JSClosure] = [:]
     

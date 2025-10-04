@@ -8,6 +8,7 @@
 import Foundation
 import JavaScriptKit
 
+@MainActor
 open class BaseContentElement: BaseElement, _BaseContentElementable {
     required public init() {
         super.init()

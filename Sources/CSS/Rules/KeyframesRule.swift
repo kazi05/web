@@ -21,7 +21,7 @@ import JavaScriptKit
 ///
 /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
 /// [Learn more](https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp)
-public class Keyframes: RulesContent, CSSRulable, ExpressibleByStringLiteral {
+public class Keyframes: RulesContent, CSSRulable, @preconcurrency ExpressibleByStringLiteral {
     public var rulesContent: Rules.Item { .keyframes(self) }
     
     public internal(set) var domElement: JSValue?

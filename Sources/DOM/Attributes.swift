@@ -227,6 +227,7 @@ extension Form: ActionAttrable {}
 
 // MARK: - AlignAttrable
 
+@MainActor
 public protocol AlignAttrable: DOMElement {
     @discardableResult
     func align(_ value: AlignType) -> Self

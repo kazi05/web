@@ -44,6 +44,7 @@ extension String: RulesContent {
 /// ```
 ///
 /// [Learn more](https://www.w3schools.com/cssref/css3_pr_mediaquery.asp)
+@MainActor
 public class MediaRule: RulesContent, CSSRulable {
     public typealias Rule = CSSRule
     public typealias RuleItems = Rules.Content
@@ -421,6 +422,7 @@ public class MediaRule: RulesContent, CSSRulable {
         /// Height of the viewport.
         ///
         /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/height)
+        @MainActor
         public func height<U: UnitValuable>(_ value: U) -> MediaType {
             and(.init(name: "height", value: UnitValue(value.value.doubleValue, value.unit).description))
         }
@@ -428,6 +430,7 @@ public class MediaRule: RulesContent, CSSRulable {
         /// Min height of the viewport.
         ///
         /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/height)
+        @MainActor
         public func minHeight<U: UnitValuable>(_ value: U) -> MediaType {
             and(.init(name: "min-height", value: UnitValue(value.value.doubleValue, value.unit).description))
         }
@@ -435,6 +438,7 @@ public class MediaRule: RulesContent, CSSRulable {
         /// Max height of the viewport.
         ///
         /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/height)
+        @MainActor
         public func maxHeight<U: UnitValuable>(_ value: U) -> MediaType {
             and(.init(name: "max-height", value: UnitValue(value.value.doubleValue, value.unit).description))
         }
@@ -767,6 +771,7 @@ public class MediaRule: RulesContent, CSSRulable {
         /// Width of the viewport including width of scrollbar.
         ///
         /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/width)
+        @MainActor
         public func width<U: UnitValuable>(_ value: U) -> MediaType {
             and(.init(name: "width", value: UnitValue(value.value.doubleValue, value.unit).description))
         }
@@ -774,6 +779,7 @@ public class MediaRule: RulesContent, CSSRulable {
         /// Minimum width of the viewport including width of scrollbar.
         ///
         /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/width)
+        @MainActor
         public func minWidth<U: UnitValuable>(_ value: U) -> MediaType {
             and(.init(name: "min-width", value: UnitValue(value.value.doubleValue, value.unit).description))
         }
@@ -781,6 +787,7 @@ public class MediaRule: RulesContent, CSSRulable {
         /// Maximum width of the viewport including width of scrollbar.
         ///
         /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/width)
+        @MainActor
         public func maxWidth<U: UnitValuable>(_ value: U) -> MediaType {
             and(.init(name: "max-width", value: UnitValue(value.value.doubleValue, value.unit).description))
         }

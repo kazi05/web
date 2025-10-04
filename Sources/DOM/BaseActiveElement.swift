@@ -8,4 +8,5 @@
 import Foundation
 import JavaScriptKit
 
+@MainActor
 open class BaseActiveElement: BaseContentElement, DOMEventsActiveScope {}

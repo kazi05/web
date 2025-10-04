@@ -7,6 +7,7 @@
 
 import JavaScriptKit
 
+@MainActor
 public protocol JSValuable {
     var jsValue: JSValue { get }
 }

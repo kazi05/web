@@ -7,16 +7,19 @@
 
 import WebFoundation
 
+@MainActor
 public protocol EventListenerCompatibleObject {
     var domElementName: String { get }
     
     associatedtype Enum: EventListenerCompatibleType
 }
 
+@MainActor
 public protocol EventListenerCompatibleType {
     var rawValue: String { get }
 }
 
+@MainActor
 public class EventListener {
     private let handler: ([JSValue]) -> Void
     private let closure: JSClosure

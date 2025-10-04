@@ -8,10 +8,11 @@
 import WebFoundation
 import LocationAPI
 
+@MainActor
 private var _shared: History?
 
 /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/History)
-public final class History: InnerStateChangeable, Equatable {
+public final class History: InnerStateChangeable, @preconcurrency Equatable {
     public static var shared: History {
         guard let shared = _shared else {
             let shared = History()

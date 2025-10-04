@@ -5,6 +5,7 @@
 //  Created by Mihael Isaev on 06.01.2021.
 //
 
+@MainActor
 public protocol PropertiesContent {
     var propertiesContent: Properties.Item { get }
 }
@@ -13,7 +14,7 @@ struct _PropertiesContent: Properties.Content {
     let propertiesContent: Properties.Item
 }
 
-@resultBuilder public struct Properties {
+@resultBuilder @MainActor public struct Properties {
     public typealias Block = () -> PropertiesContent
     public typealias Content = PropertiesContent
     

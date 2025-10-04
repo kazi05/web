@@ -7,10 +7,11 @@
 
 import WebFoundation
 
+@MainActor
 var _sharedNavigator: Navigator?
 
 /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/Navigator)
-public final class Navigator: InnerStateChangeable, Equatable {
+public final class Navigator: InnerStateChangeable, @preconcurrency Equatable {
     public static var shared: Navigator {
         guard let shared = _sharedNavigator else {
             let shared = Navigator()

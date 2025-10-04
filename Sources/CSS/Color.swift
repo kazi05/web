@@ -274,6 +274,6 @@ open class Color: CustomStringConvertible, _PropertyValueInnerChangeable, Hashab
     }
 }
 
-public func /(lhs: Color, rhs: Double) -> Color {
+@MainActor public func /(lhs: Color, rhs: Double) -> Color {
     lhs.stop(rhs)
 }

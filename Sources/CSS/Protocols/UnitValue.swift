@@ -16,7 +16,8 @@ public protocol UnitValuable: AnyUnitValuable {
     var unit: Unit { get }
 }
 
-public class UnitValue: UnitValuable, UniValue, _PropertyValueInnerChangeable, CustomStringConvertible {
+@MainActor
+public class UnitValue:@MainActor  UnitValuable, @MainActor UniValue, @MainActor _PropertyValueInnerChangeable, @preconcurrency CustomStringConvertible {
     @State public var value: Double = 0
     @State public var unit: Unit = .px
     
@@ -81,103 +82,103 @@ public class UnitValue: UnitValuable, UniValue, _PropertyValueInnerChangeable, C
 }
 
 extension State where Value == Double {
-    public var cm: State<UnitValue> { self.map { UnitValue($0, .cm) } }
-    public var mm: State<UnitValue> { self.map { UnitValue($0, .mm) } }
-    public var `in`: State<UnitValue> { self.map { UnitValue($0, .in) } }
-    public var px: State<UnitValue> { self.map { UnitValue($0, .px) } }
-    public var pt: State<UnitValue> { self.map { UnitValue($0, .pt) } }
-    public var pc: State<UnitValue> { self.map { UnitValue($0, .pc) } }
-    public var fr: State<UnitValue> { self.map { UnitValue($0, .fr) } }
-    public var em: State<UnitValue> { self.map { UnitValue($0, .em) } }
-    public var ex: State<UnitValue> { self.map { UnitValue($0, .ex) } }
-    public var ch: State<UnitValue> { self.map { UnitValue($0, .ch) } }
-    public var rem: State<UnitValue> { self.map { UnitValue($0, .rem) } }
-    public var vw: State<UnitValue> { self.map { UnitValue($0, .vw) } }
-    public var vh: State<UnitValue> { self.map { UnitValue($0, .vh) } }
-    public var vmin: State<UnitValue> { self.map { UnitValue($0, .vmin) } }
-    public var vmax: State<UnitValue> { self.map { UnitValue($0, .vmax) } }
-    public var percent: State<UnitValue> { self.map { UnitValue($0, .percent) } }
+    @MainActor public var cm: State<UnitValue> { self.map { UnitValue($0, .cm) } }
+    @MainActor public var mm: State<UnitValue> { self.map { UnitValue($0, .mm) } }
+    @MainActor public var `in`: State<UnitValue> { self.map { UnitValue($0, .in) } }
+    @MainActor public var px: State<UnitValue> { self.map { UnitValue($0, .px) } }
+    @MainActor public var pt: State<UnitValue> { self.map { UnitValue($0, .pt) } }
+    @MainActor public var pc: State<UnitValue> { self.map { UnitValue($0, .pc) } }
+    @MainActor public var fr: State<UnitValue> { self.map { UnitValue($0, .fr) } }
+    @MainActor public var em: State<UnitValue> { self.map { UnitValue($0, .em) } }
+    @MainActor public var ex: State<UnitValue> { self.map { UnitValue($0, .ex) } }
+    @MainActor public var ch: State<UnitValue> { self.map { UnitValue($0, .ch) } }
+    @MainActor public var rem: State<UnitValue> { self.map { UnitValue($0, .rem) } }
+    @MainActor public var vw: State<UnitValue> { self.map { UnitValue($0, .vw) } }
+    @MainActor public var vh: State<UnitValue> { self.map { UnitValue($0, .vh) } }
+    @MainActor public var vmin: State<UnitValue> { self.map { UnitValue($0, .vmin) } }
+    @MainActor public var vmax: State<UnitValue> { self.map { UnitValue($0, .vmax) } }
+    @MainActor public var percent: State<UnitValue> { self.map { UnitValue($0, .percent) } }
 }
 
 extension UnitValuable {
     public var description: String { "\(value)\(unit.value)" }
     
-    public var cm: ValueWithUnit<V> { .init(value, .cm) }
-    public var mm: ValueWithUnit<V> { .init(value, .mm) }
-    public var `in`: ValueWithUnit<V> { .init(value, .in) }
-    public var px: ValueWithUnit<V> { .init(value, .px) }
-    public var pt: ValueWithUnit<V> { .init(value, .pt) }
-    public var pc: ValueWithUnit<V> { .init(value, .pc) }
-    public var fr: ValueWithUnit<V> { .init(value, .fr) }
-    public var em: ValueWithUnit<V> { .init(value, .em) }
-    public var ex: ValueWithUnit<V> { .init(value, .ex) }
-    public var ch: ValueWithUnit<V> { .init(value, .ch) }
-    public var rem: ValueWithUnit<V> { .init(value, .rem) }
-    public var vw: ValueWithUnit<V> { .init(value, .vw) }
-    public var vh: ValueWithUnit<V> { .init(value, .vh) }
-    public var vmin: ValueWithUnit<V> { .init(value, .vmin) }
-    public var vmax: ValueWithUnit<V> { .init(value, .vmax) }
-    public var percent: ValueWithUnit<V> { .init(value, .percent) }
+    @MainActor public var cm: ValueWithUnit<V> { .init(value, .cm) }
+    @MainActor public var mm: ValueWithUnit<V> { .init(value, .mm) }
+    @MainActor public var `in`: ValueWithUnit<V> { .init(value, .in) }
+    @MainActor public var px: ValueWithUnit<V> { .init(value, .px) }
+    @MainActor public var pt: ValueWithUnit<V> { .init(value, .pt) }
+    @MainActor public var pc: ValueWithUnit<V> { .init(value, .pc) }
+    @MainActor public var fr: ValueWithUnit<V> { .init(value, .fr) }
+    @MainActor public var em: ValueWithUnit<V> { .init(value, .em) }
+    @MainActor public var ex: ValueWithUnit<V> { .init(value, .ex) }
+    @MainActor public var ch: ValueWithUnit<V> { .init(value, .ch) }
+    @MainActor public var rem: ValueWithUnit<V> { .init(value, .rem) }
+    @MainActor public var vw: ValueWithUnit<V> { .init(value, .vw) }
+    @MainActor public var vh: ValueWithUnit<V> { .init(value, .vh) }
+    @MainActor public var vmin: ValueWithUnit<V> { .init(value, .vmin) }
+    @MainActor public var vmax: ValueWithUnit<V> { .init(value, .vmax) }
+    @MainActor public var percent: ValueWithUnit<V> { .init(value, .percent) }
     
-    public func unit(_ u: Unit) -> ValueWithUnit<V> { .init(value, u) }
+    @MainActor public func unit(_ u: Unit) -> ValueWithUnit<V> { .init(value, u) }
 }
 
-extension UInt: UnitValuable {
+extension UInt: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension UInt8: UnitValuable {
+extension UInt8: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension UInt16: UnitValuable {
+extension UInt16: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension UInt32: UnitValuable {
+extension UInt32: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension UInt64: UnitValuable {
+extension UInt64: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension Int: UnitValuable {
+extension Int: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension Int8: UnitValuable {
+extension Int8: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension Int16: UnitValuable {
+extension Int16: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension Int32: UnitValuable {
+extension Int32: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension Int64: UnitValuable {
+extension Int64: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension Double: UnitValuable {
+extension Double: @MainActor UnitValuable {
     public var value: Double { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }
 
-extension Float32: UnitValuable {
+extension Float32: @MainActor UnitValuable {
     public var value: Self { self }
-    public var unit: Unit { .px }
+    @MainActor public var unit: Unit { .px }
 }

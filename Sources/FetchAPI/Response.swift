@@ -61,7 +61,7 @@ public class Response: Bodyable {
             handler(.success(.init($0)))
             return JSValue.undefined
         }, failure: {
-            handler(.failure($0))
+            handler(.failure(JSException(message: $0.string ?? "Unknown Error")))
             return JSValue.undefined
         })
     }

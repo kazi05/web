@@ -17,27 +17,27 @@ public final class CSSFunction: CustomStringConvertible, PropertyValueImportanta
     // MARK: Linear Gradient
     
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-    public static func linearGradient(_ colors: Color...) -> CSSFunction {
+    @MainActor public static func linearGradient(_ colors: Color...) -> CSSFunction {
         .linearGradient(colors)
     }
     
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-    public static func linearGradient(_ colors: [Color]) -> CSSFunction {
+    @MainActor public static func linearGradient(_ colors: [Color]) -> CSSFunction {
         .linearGradient(nil, colors.map { $0.description })
     }
     
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-    public static func linearGradient<A: AngleValue>(angle: A, _ colors: Color...) -> CSSFunction {
+    @MainActor public static func linearGradient<A: AngleValue>(angle: A, _ colors: Color...) -> CSSFunction {
         .linearGradient(angle: angle, colors)
     }
     
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-    public static func linearGradient<A: AngleValue>(angle: A, _ colors: [Color]) -> CSSFunction {
+    @MainActor public static func linearGradient<A: AngleValue>(angle: A, _ colors: [Color]) -> CSSFunction {
         .linearGradient(angle, colors.map { $0.description })
     }
     
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-    static func linearGradient(_ angle: AngleValue? = nil, _ colors: [String]) -> CSSFunction {
+    @MainActor static func linearGradient(_ angle: AngleValue? = nil, _ colors: [String]) -> CSSFunction {
         var result = "linear-gradient("
         if let angle = angle {
             result += "\(angle.angleValue), "
@@ -57,7 +57,7 @@ public final class CSSFunction: CustomStringConvertible, PropertyValueImportanta
     /// The function's result is an object of the `<gradient>` data type, which is a special kind of `<image>`.
     ///
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient())
-    public static func radialGradient(
+    @MainActor public static func radialGradient(
         shape: CSSRadialGradientShape = .ellipse,
         size: CSSRadialGradientSize = .farthestCorner,
         position: NumericValue,
@@ -72,7 +72,7 @@ public final class CSSFunction: CustomStringConvertible, PropertyValueImportanta
     /// The function's result is an object of the `<gradient>` data type, which is a special kind of `<image>`.
     ///
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient())
-    public static func radialGradient(
+    @MainActor public static func radialGradient(
         shape: CSSRadialGradientShape = .ellipse,
         size: CSSRadialGradientSize = .farthestCorner,
         position: NumericValue,
@@ -87,7 +87,7 @@ public final class CSSFunction: CustomStringConvertible, PropertyValueImportanta
     /// The function's result is an object of the `<gradient>` data type, which is a special kind of `<image>`.
     ///
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient())
-    public static func radialGradient(
+    @MainActor public static func radialGradient(
         shape: CSSRadialGradientShape = .ellipse,
         size: CSSRadialGradientSize = .farthestCorner,
         position: CSSRadialGradientPosition = .center,
@@ -102,7 +102,7 @@ public final class CSSFunction: CustomStringConvertible, PropertyValueImportanta
     /// The function's result is an object of the `<gradient>` data type, which is a special kind of `<image>`.
     ///
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient())
-    public static func radialGradient(
+    @MainActor public static func radialGradient(
         shape: CSSRadialGradientShape = .ellipse,
         size: CSSRadialGradientSize = .farthestCorner,
         position: CSSRadialGradientPosition = .center,

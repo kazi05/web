@@ -5,6 +5,7 @@
 //  Created by Mihael Isaev on 17.11.2020.
 //
 
+@MainActor
 public protocol Copyable {
     init (original: Self)
 }

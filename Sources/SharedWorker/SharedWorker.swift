@@ -9,8 +9,10 @@ import WebFoundation
 import WorkersAPI
 import ChannelMessagingAPI
 
+@MainActor
 private var sharedworker: SharedWorker!
 
+@MainActor
 open class SharedWorker {
     private var isStarted = false
     

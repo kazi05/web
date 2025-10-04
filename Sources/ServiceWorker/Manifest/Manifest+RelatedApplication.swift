@@ -20,19 +20,19 @@ extension Manifest {
             }
             
             /// [Google Chrome Web Store](https://chrome.google.com/webstore)
-            public static var chromeWebStore: Self = "chrome_web_store"
+            @MainActor public static var chromeWebStore: Self = "chrome_web_store"
             
             /// [Google Play Store](https://play.google.com/)
-            public static var play: Self = "play"
+            @MainActor public static var play: Self = "play"
             
             /// [iTunes App Store](https://itunes.apple.com/us/genre/ios/)
-            public static var itunes: Self = "itunes"
+            @MainActor public static var itunes: Self = "itunes"
             
             /// [Web apps](https://www.w3.org/TR/appmanifest/)
-            public static var webapp: Self = "webapp"
+            @MainActor public static var webapp: Self = "webapp"
             
             /// [Windows App Store](https://www.microsoft.com/en-us/store/apps)
-            public static var windows: Self = "windows"
+            @MainActor public static var windows: Self = "windows"
         }
         
         /// The platform on which the application can be found.

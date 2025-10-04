@@ -90,11 +90,13 @@ public class ForEach<Item>: BaseElement, ScrollHandleable, AlignAttrable where I
                     element.remove()
                 }
                 insertions.forEach { insertion in
+                    @MainActor
                     func addAsDiv() {
                         let div = Div()
                         div.parseDOMItem(self.items(at: insertion).domContentItem)
                         superview.insertChild(div, at: insertion)
                     }
+                    @MainActor 
                     func parse(_ item: DOMItem) {
                         switch item {
                         case .items(let items):
@@ -139,7 +141,7 @@ public class ForEach<Item>: BaseElement, ScrollHandleable, AlignAttrable where I
         return block(index, items.wrappedValue[index])
     }
     
-    private func subscribeToChanges(_ begin: @escaping () -> Void, _ handler: @escaping ([Int], [Int], [Int]) -> Void, _ end: @escaping () -> Void) {
+    private func subscribeToChanges(_ begin: @MainActor @escaping () -> Void, _ handler: @escaping ([Int], [Int], [Int]) -> Void, _ end: @escaping () -> Void) {
         items.beginTrigger(begin)
         items.listen { old, new in
             let diff = old.difference(new)
@@ -168,17 +170,17 @@ extension ForEach where Item == Int {
 }
 
 extension Int {
-    public func times(@DOM block: @escaping ForEach<Int>.Handler, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
+    @MainActor public func times(@DOM block: @escaping ForEach<Int>.Handler, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
         assert(self >= 2, "Should be 2 times and more", file: file, line: line)
         return .init(0...(self - 1), block: block)
     }
     
-    public func times(@DOM block: @escaping ForEach<Int>.HandlerValue, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
+    @MainActor public func times(@DOM block: @escaping ForEach<Int>.HandlerValue, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
         assert(self >= 2, "Should be 2 times and more", file: file, line: line)
         return .init(0...(self - 1), block: block)
     }
     
-    public func times(@DOM block: @escaping ForEach<Int>.HandlerSimple, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
+    @MainActor public func times(@DOM block: @escaping ForEach<Int>.HandlerSimple, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
         assert(self >= 2, "Should be 2 times and more", file: file, line: line)
         return .init(0...(self - 1), block: block)
     }

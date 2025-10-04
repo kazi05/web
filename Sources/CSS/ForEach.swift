@@ -7,6 +7,7 @@
 
 import WebFoundation
 
+@MainActor
 public protocol AnyForEach {
     var count: Int { get }
     func allItems() -> [RulesContent]
@@ -14,6 +15,7 @@ public protocol AnyForEach {
     func subscribeToChanges(_ begin: @escaping () -> Void, _ handler: @escaping ([Int], [Int], [Int]) -> Void, _ end: @escaping () -> Void)
 }
 
+@MainActor
 public class ForEach<Item> where Item: Hashable {
     public typealias Handler = (Int, Item) -> RulesContent
     public typealias HandlerValue = (Item) -> RulesContent
@@ -110,17 +112,17 @@ extension ForEach where Item == Int {
 }
 
 extension Int {
-    public func times(@Rules block: @escaping ForEach<Int>.Handler, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
+    @MainActor public func times(@Rules block: @escaping ForEach<Int>.Handler, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
         assert(self >= 2, "Should be 2 times and more", file: file, line: line)
         return .init(0...(self - 1), block: block)
     }
     
-    public func times(@Rules block: @escaping ForEach<Int>.HandlerValue, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
+    @MainActor public func times(@Rules block: @escaping ForEach<Int>.HandlerValue, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
         assert(self >= 2, "Should be 2 times and more", file: file, line: line)
         return .init(0...(self - 1), block: block)
     }
     
-    public func times(@Rules block: @escaping ForEach<Int>.HandlerSimple, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
+    @MainActor public func times(@Rules block: @escaping ForEach<Int>.HandlerSimple, file: StaticString = #fileID, line: UInt = #line) -> ForEach<Int> {
         assert(self >= 2, "Should be 2 times and more", file: file, line: line)
         return .init(0...(self - 1), block: block)
     }
@@ -133,63 +135,7 @@ public class BuilderFunction: RulesContent {
     
     let content: RulesContent
     
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == String {
+    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) {
         self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Int8 {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Int16 {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Int32 {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Int64 {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Int {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Double {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Float {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == UInt8 {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == UInt16 {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == UInt32 {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == UInt64 {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result, Element>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Array<Element> {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result, Key, Value>(_ valueToPass: Result, @Rules content: @escaping (Result) -> RulesContent) where Result == Dictionary<Key, Value> {
-        self.content = content(valueToPass)
-    }
-    
-    public init <Result>(_ beforeRender: @escaping () -> Result, @Rules content: @escaping (Result) -> RulesContent) {
-        self.content = content(beforeRender())
     }
 }

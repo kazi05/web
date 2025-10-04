@@ -15,7 +15,8 @@ extension NumericValue {
     public var description: String { numericValue }
 }
 
-public class NumericValueContainer: CustomStringConvertible, _PropertyValueInnerChangeable {
+@MainActor
+public class NumericValueContainer: @preconcurrency CustomStringConvertible, @MainActor _PropertyValueInnerChangeable {
     public var value: String
     
     var _changeHandler = {}

@@ -7,7 +7,7 @@
 
 import WebFoundation
 
-public struct TimeUnit: UniValue, _StringPropertyValue, PropertyValueImportantable {
+public struct TimeUnit: @MainActor UniValue, @MainActor  _StringPropertyValue, @MainActor PropertyValueImportantable {
     let value: String
     
     init (_ value: String) {

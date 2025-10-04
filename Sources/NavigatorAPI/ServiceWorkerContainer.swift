@@ -18,6 +18,7 @@ import Events
 /// and access the state of service workers and their registrations.
 ///
 /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer)
+@MainActor
 public final class ServiceWorkerContainer {
     #if arch(wasm32)
     /// Reference to JS-object
@@ -54,7 +55,8 @@ public final class ServiceWorkerContainer {
         }
         
 		public var jsValue: JSValue {
-            ["scope": scope].jsValue
+            let dict: [String: ConvertibleToJSValue] = ["scope": scope]
+            return dict.jsValue
         }
     }
     
@@ -421,6 +423,7 @@ public class ServiceWorkerRegistration: EventTarget {
 }
 
 /// Provides a reference to a service worker.
+@MainActor
 public final class ServiceWorker: Worker {
     /// Serialized script URL defined as part of `ServiceWorkerRegistration`.
     ///
@@ -495,6 +498,8 @@ public final class ServiceWorker: Worker {
     }
     
     deinit {
-        shutdown()
+        MainActor.assumeIsolated {
+            shutdown()
+        }
     }
 }

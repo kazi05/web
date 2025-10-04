@@ -11,6 +11,7 @@ import DOM
 /// Reports changes to the dimensions of an Element's content
 /// or border box, or the bounding box of an SVGElement.
 /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver/ResizeObserver)
+@MainActor
 public class ResizeObserver {
     private var closure: JSClosure?
     private var jsValue: JSValue?
@@ -116,8 +117,8 @@ public class ResizeObserver {
     }
     
     /// [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry)
-    public struct Entry {
-        public struct BoxSize: CustomStringConvertible {
+    public struct Entry: Sendable {
+        public struct BoxSize: CustomStringConvertible, Sendable {
             /// The length of the observed element's border box in the block dimension.
             /// For boxes with a horizontal writing-mode, this is the vertical dimension, or height; if the writing-mode is vertical, this is the horizontal dimension, or width.
             public let blockSize: Double
@@ -161,9 +162,9 @@ public class ResizeObserver {
         public let contentRect: Rect
         
         /// A reference to the Element or SVGElement being observed.
-        public let target: JSValue
+        nonisolated(unsafe) public let target: JSValue
         
-        init (_ jsValue: JSValue) {
+        @MainActor init(_ jsValue: JSValue) {
             borderBoxSize = jsValue.object?["borderBoxSize"].array?.compactMap { BoxSize($0) } ?? []
             contentBoxSize = jsValue.object?["contentBoxSize"].array?.compactMap { BoxSize($0) } ?? []
             devicePixelContentBoxSize = jsValue.object?["devicePixelContentBoxSize"].array?.compactMap { BoxSize($0) } ?? []

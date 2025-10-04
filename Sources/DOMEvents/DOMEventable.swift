@@ -5,6 +5,7 @@
 //  Created by Mihael Isaev on 24.02.2021.
 //
 
+@MainActor
 public protocol DOMEventable: Storageable {
     #if arch(wasm32)
     var domElement: JSValue { get set }

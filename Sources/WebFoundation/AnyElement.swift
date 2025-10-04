@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol AnyElement: AnyObject {
     static var name: String { get }
 }

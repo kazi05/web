@@ -52,7 +52,7 @@ extension Bodyable {
             closure(.success(.init(value)))
             return JSValue.undefined
         }, failure: { error in
-            closure(.failure(error))
+            closure(.failure(JSException(message: error.string ?? "Unknown error.")))
             return JSValue.undefined
         })
     }
@@ -68,7 +68,7 @@ extension Bodyable {
             closure(.success(.init(value)))
             return JSValue.undefined
         }, failure: { error in
-            closure(.failure(error))
+            closure(.failure(JSException(message: error.string ?? "Unknown error.")))
             return JSValue.undefined
         })
     }
@@ -84,7 +84,7 @@ extension Bodyable {
             closure(.success(.jsValue(value)))
             return JSValue.undefined
         }, failure: { error in
-            closure(.failure(error))
+            closure(.failure(JSException(message: error.string ?? "Unknown error.")))
             return JSValue.undefined
         })
     }
@@ -100,7 +100,7 @@ extension Bodyable {
             closure(.success(value.string ?? ""))
             return JSValue.undefined
         }, failure: { error in
-            closure(.failure(error))
+            closure(.failure(JSException(message: error.string ?? "Unknown error.")))
             return JSValue.undefined
         })
     }
@@ -115,17 +115,17 @@ extension Bodyable {
         blob {
             switch $0 {
             case .failure(let error):
-                closure(.failure(error))
+                closure(.failure(JSException(message: error.localizedDescription)))
             case .success(let blob):
                 blob.arrayBuffer {
                     switch $0 {
                     case .failure(let error):
-                        closure(.failure(error))
+                        closure(.failure(JSException(message: error.localizedDescription)))
                     case .success(let arrayBuffer):
                         do {
                             closure(.success(try arrayBuffer.decode(as: model, decoder: decoder)))
                         } catch {
-                            closure(.failure(error))
+                            closure(.failure(JSException(message: error.localizedDescription)))
                         }
                     }
                 }

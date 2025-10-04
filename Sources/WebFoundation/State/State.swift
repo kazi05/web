@@ -14,12 +14,12 @@ public protocol StateConvertible: UniValue {
 }
 
 extension StateConvertible {
-    public var uniValue: Value { stateValue.wrappedValue }
-    public var uniStateValue: State<Value>? { stateValue }
+    @MainActor public var uniValue: Value { stateValue.wrappedValue }
+    @MainActor public var uniStateValue: State<Value>? { stateValue }
 }
 
 @propertyWrapper
-open class State<Value>: Stateable {
+open class State<Value>: @MainActor Stateable {
     private var _originalValue: Value
     private var _wrappedValue: Value
     public var wrappedValue: Value {
@@ -160,17 +160,17 @@ open class State<Value>: Stateable {
         }
     }
     
-    public func and<V>(_ state: State<V>) -> CombinedState<Value, V> {
+    @MainActor public func and<V>(_ state: State<V>) -> CombinedState<Value, V> {
         CombinedState(left: projectedValue, right: state)
     }
 }
 
-extension State: StateConvertible {
+extension State: @MainActor StateConvertible {
     public var stateValue: State<Value> { self }
 }
 
-extension State: InnerStateChangeableObserver where Value: InnerStateChangeable {
-    public func innerStateChangeableSetup() {
+extension State: @MainActor InnerStateChangeableObserver where Value: InnerStateChangeable {
+    @MainActor public func innerStateChangeableSetup() {
         _wrappedValue.innerStateChanged = { old, new in
             self.beginTriggers.forEach { $0() }
             self.listeners.forEach { $0(old, new) }
@@ -188,6 +188,7 @@ extension State where Value: Equatable {
     }
 }
 
+@MainActor
 public class CombinedState<A, B> {
     let _left: State<A>
     let _right: State<B>

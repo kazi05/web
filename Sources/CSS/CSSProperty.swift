@@ -19,6 +19,7 @@ extension String {
     }
 }
 
+@MainActor
 public protocol AnyProperty {
     var key: String { get }
     var value: String { get }
@@ -30,6 +31,7 @@ extension AnyProperty {
     }
 }
 
+@MainActor
 public protocol Property: AnyProperty, PropertiesContent {
     associatedtype Value: CustomStringConvertible
     
@@ -47,12 +49,14 @@ extension Property {
     public var propertyAliases: [AnyProperty] { [] }
 }
 
+@MainActor
 class _PropertyContent<Value: CustomStringConvertible> {
     var _changeHandler: (Value?) -> Void = { _ in }
     
     init () {}
 }
 
+@MainActor
 protocol _Property: Property {
     var _content: _PropertyContent<Value> { get }
     func _changed(to newValue: Value)

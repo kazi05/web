@@ -273,6 +273,7 @@ extension DOMElement {
     }
 }
 
+@MainActor
 public final class DOMElementProperties {
     let uid: String = .shuffledAlphabet(8, letters: "AaBbCcDdEeFfGgJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz")
     

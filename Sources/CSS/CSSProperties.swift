@@ -1664,7 +1664,8 @@ extension PropertyKey {
     public static var backgroundSize: PropertyKey<BackgroundSizeValue> { "background-size".propertyKey() }
 }
 
-public class BackgroundSizeValue: CustomStringConvertible, _PropertyValueInnerChangeable {
+@MainActor
+public class BackgroundSizeValue: @preconcurrency CustomStringConvertible, @MainActor _PropertyValueInnerChangeable {
     @State public var value = ""
 
     var _changeHandler = {}
@@ -2047,7 +2048,8 @@ extension CSSRulable {
 /// ```
 ///
 /// [Learn more](https://www.w3schools.com/cssref/css3_pr_border-bottom-left-radius.asp)
-public class BorderBottomLeftRadiusProperty: _Property {
+@MainActor
+public class BorderBottomLeftRadiusProperty: @MainActor _Property {
     public var propertyKey: PropertyKey<BorderRadiusType> { .borderBottomLeftRadius }
     public var propertyValue: BorderRadiusType
     var _content = _PropertyContent<BorderRadiusType>()
@@ -2069,7 +2071,7 @@ public class BorderBottomLeftRadiusProperty: _Property {
 
 extension PropertyKey {
     /// Defines the radius of the border of the bottom-left corner
-    public static var borderBottomLeftRadius: PropertyKey<BorderRadiusType> { "border-bottom-left-radius".propertyKey() }
+    @MainActor public static var borderBottomLeftRadius: PropertyKey<BorderRadiusType> { "border-bottom-left-radius".propertyKey() }
 }
 
 extension Stylesheetable {
@@ -2236,7 +2238,8 @@ extension CSSRulable {
 /// ```
 ///
 /// [Learn more](https://www.w3schools.com/cssref/css3_pr_border-bottom-right-radius.asp)
-public class BorderBottomRightRadiusProperty: _Property {
+@MainActor
+public class BorderBottomRightRadiusProperty: @MainActor _Property {
     public var propertyKey: PropertyKey<BorderRadiusType> { .borderBottomRightRadius }
     public var propertyValue: BorderRadiusType
     var _content = _PropertyContent<BorderRadiusType>()
@@ -2258,7 +2261,7 @@ public class BorderBottomRightRadiusProperty: _Property {
 
 extension PropertyKey {
     /// Defines the radius of the border of the bottom-right corner
-    public static var borderBottomRightRadius: PropertyKey<BorderRadiusType> { "_border-bottom-right-radius__".propertyKey() }
+    @MainActor public static var borderBottomRightRadius: PropertyKey<BorderRadiusType> { "_border-bottom-right-radius__".propertyKey() }
 }
 
 extension Stylesheetable {
@@ -4159,6 +4162,7 @@ public class BorderRadiusValue: CustomStringConvertible, _PropertyValueInnerChan
 
     var _changeHandler = {}
 
+    @MainActor
     public init (all: BorderRadiusType) {
         value = all.description
         $value.listen {
@@ -4166,6 +4170,7 @@ public class BorderRadiusValue: CustomStringConvertible, _PropertyValueInnerChan
         }
     }
 
+    @MainActor
     public convenience init (all: State<BorderRadiusType>) {
         self.init(all: all.wrappedValue)
         all.listen {
@@ -4173,16 +4178,19 @@ public class BorderRadiusValue: CustomStringConvertible, _PropertyValueInnerChan
         }
     }
 
+    @MainActor
     private static func values(_ values: BorderRadiusType..., important: Bool? = nil) -> String {
         self.values(values, important: important)
     }
 
+    @MainActor
     private static func values(_ values: [BorderRadiusType], important: Bool? = nil) -> String {
         [values.map { $0.description }, [important == true ? "!important" : nil].compactMap { $0 }].flatMap { $0 }.joined(separator: " ")
     }
 
     // MARK: TL/BR
 
+    @MainActor
     public init (topLeft: BorderRadiusType, bottomRight: BorderRadiusType, important: Bool? = nil) {
         value = Self.values(topLeft, bottomRight, important: important)
         $value.listen {
@@ -4190,6 +4198,7 @@ public class BorderRadiusValue: CustomStringConvertible, _PropertyValueInnerChan
         }
     }
 
+    @MainActor
     public convenience init (topLeft: State<BorderRadiusType>, bottomRight: BorderRadiusType, important: Bool? = nil) {
         self.init(topLeft: topLeft.wrappedValue, bottomRight: bottomRight, important: important)
         topLeft.listen {
@@ -4197,6 +4206,7 @@ public class BorderRadiusValue: CustomStringConvertible, _PropertyValueInnerChan
         }
     }
 
+    @MainActor
     public convenience init (topLeft: BorderRadiusType, bottomRight: State<BorderRadiusType>, important: Bool? = nil) {
         self.init(topLeft: topLeft, bottomRight: bottomRight.wrappedValue, important: important)
         bottomRight.listen {
@@ -4204,6 +4214,7 @@ public class BorderRadiusValue: CustomStringConvertible, _PropertyValueInnerChan
         }
     }
 
+    @MainActor
     public convenience init (topLeft: State<BorderRadiusType>, bottomRight: State<BorderRadiusType>, important: Bool? = nil) {
         self.init(topLeft: topLeft.wrappedValue, bottomRight: bottomRight.wrappedValue)
         topLeft.listen {
@@ -4216,6 +4227,7 @@ public class BorderRadiusValue: CustomStringConvertible, _PropertyValueInnerChan
 
     // MARK: Other
 
+    @MainActor
     public init (topLeft: BorderRadiusType, topRight: BorderRadiusType, bottomLeft: BorderRadiusType, important: Bool? = nil) {
         value = Self.values(topLeft, topRight, bottomLeft, important: important)
         $value.listen {
@@ -4223,6 +4235,7 @@ public class BorderRadiusValue: CustomStringConvertible, _PropertyValueInnerChan
         }
     }
 
+    @MainActor
     public init (topLeft: BorderRadiusType, topRight: BorderRadiusType, bottomRight: BorderRadiusType, bottomLeft: BorderRadiusType, important: Bool? = nil) {
         value = Self.values(topLeft, topRight, bottomRight, bottomLeft, important: important)
         $value.listen {
@@ -5651,7 +5664,8 @@ extension CSSRulable {
 /// ```
 ///
 /// [Learn more](https://www.w3schools.com/cssref/css3_pr_border-top-left-radius.asp)
-public class BorderTopLeftRadiusProperty: _Property {
+@MainActor
+public class BorderTopLeftRadiusProperty: @MainActor _Property {
     public var propertyKey: PropertyKey<BorderRadiusType> { .borderTopLeftRadius }
     public var propertyValue: BorderRadiusType
     var _content = _PropertyContent<BorderRadiusType>()
@@ -5673,7 +5687,7 @@ public class BorderTopLeftRadiusProperty: _Property {
 
 extension PropertyKey {
     /// Defines the radius of the border of the top-left corner
-    public static var borderTopLeftRadius: PropertyKey<BorderRadiusType> { "border-top-left-radius".propertyKey() }
+    @MainActor public static var borderTopLeftRadius: PropertyKey<BorderRadiusType> { "border-top-left-radius".propertyKey() }
 }
 
 extension Stylesheetable {
@@ -5840,7 +5854,8 @@ extension CSSRulable {
 /// ```
 ///
 /// [Learn more](https://www.w3schools.com/cssref/css3_pr_border-top-right-radius.asp)
-public class BorderTopRightRadiusProperty: _Property {
+@MainActor
+public class BorderTopRightRadiusProperty: @MainActor _Property {
     public var propertyKey: PropertyKey<BorderRadiusType> { .borderTopRightRadius }
     public var propertyValue: BorderRadiusType
     var _content = _PropertyContent<BorderRadiusType>()
@@ -5862,7 +5877,7 @@ public class BorderTopRightRadiusProperty: _Property {
 
 extension PropertyKey {
     /// Defines the radius of the border of the top-right corner
-    public static var borderTopRightRadius: PropertyKey<BorderRadiusType> { "border-top-right-radius".propertyKey() }
+    @MainActor public static var borderTopRightRadius: PropertyKey<BorderRadiusType> { "border-top-right-radius".propertyKey() }
 }
 
 extension Stylesheetable {
@@ -8997,7 +9012,8 @@ extension CSSRulable {
 /// ```
 ///
 /// [Learn more](https://www.w3schools.com/cssref/pr_gen_content.asp)
-public class ContentProperty: _Property {
+@MainActor
+public class ContentProperty: @MainActor _Property {
     public var propertyKey: PropertyKey<ContentType> { .content }
     public var propertyValue: ContentType
     var _content = _PropertyContent<ContentType>()
@@ -9014,7 +9030,7 @@ public class ContentProperty: _Property {
 
 extension PropertyKey {
     /// Used with the :before and :after pseudo-elements, to insert generated content
-    public static var content: PropertyKey<ContentType> { "content".propertyKey() }
+    @MainActor public static var content: PropertyKey<ContentType> { "content".propertyKey() }
 }
 
 extension Stylesheetable {
@@ -16715,12 +16731,13 @@ extension PropertyKey {
     public static var outline: PropertyKey<OutlineValue> { "outline".propertyKey() }
 }
 
-public struct OutlineValue: CustomStringConvertible {
+public struct OutlineValue: @preconcurrency CustomStringConvertible {
     let width: UnitValue
     let style: OutlineStyleType
     let color: Color
     let important: Bool?
 
+    @MainActor
     public init<U: UnitValuable>(width: U, style: OutlineStyleType, color: Color, important: Bool? = nil) {
         self.width = UnitValue(width.value.doubleValue, width.unit)
         self.style = style
@@ -16728,7 +16745,7 @@ public struct OutlineValue: CustomStringConvertible {
         self.important = important
     }
 
-    public var description: String {
+    @MainActor public var description: String {
         [width.description, style.value, color.description].joined(separator: " ") + (important == true ? "!important" : "")
     }
 }
@@ -20118,7 +20135,8 @@ extension CSSRulable {
 /// ```
 ///
 /// [Learn more](https://www.w3schools.com/cssref/css3_pr_transition-delay.asp)
-public class TransitionDelayProperty: _Property {
+@MainActor
+public class TransitionDelayProperty: @MainActor _Property {
     public var propertyKey: PropertyKey<TimeType> { .transitionDelay }
     public var propertyValue: TimeType
     var _content = _PropertyContent<TimeType>()
@@ -20136,7 +20154,7 @@ public class TransitionDelayProperty: _Property {
 
 extension PropertyKey {
     /// Specifies when the transition effect will start
-    public static var transitionDelay: PropertyKey<TimeType> { "transition-delay".propertyKey() }
+    @MainActor public static var transitionDelay: PropertyKey<TimeType> { "transition-delay".propertyKey() }
 }
 
 extension Stylesheetable {
@@ -20171,7 +20189,8 @@ extension CSSRulable {
 /// ```
 ///
 /// [Learn more](https://www.w3schools.com/cssref/css3_pr_transition-duration.asp)
-public class TransitionDurationProperty: _Property {
+@MainActor
+public class TransitionDurationProperty: @MainActor _Property {
     public var propertyKey: PropertyKey<TimeType> { .transitionDuration }
     public var propertyValue: TimeType
     var _content = _PropertyContent<TimeType>()
@@ -20189,7 +20208,7 @@ public class TransitionDurationProperty: _Property {
 
 extension PropertyKey {
     /// Specifies how many seconds or milliseconds a transition effect takes to complete
-    public static var transitionDuration: PropertyKey<TimeType> { "transition-duration".propertyKey() }
+    @MainActor public static var transitionDuration: PropertyKey<TimeType> { "transition-duration".propertyKey() }
 }
 
 extension Stylesheetable {

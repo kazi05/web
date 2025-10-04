@@ -5,6 +5,7 @@
 //  Created by Mihael Isaev on 30.12.2020.
 //
 
+@MainActor
 public protocol RulesContent {
     var rulesContent: Rules.Item { get }
 }
@@ -17,7 +18,7 @@ struct _RulesContent: Rules.Content {
     let rulesContent: Rules.Item
 }
 
-@resultBuilder public struct Rules {
+@resultBuilder @MainActor public struct Rules {
     public typealias Block = () -> RulesContent
     public typealias Content = RulesContent
     

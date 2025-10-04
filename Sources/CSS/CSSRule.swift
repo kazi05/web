@@ -152,6 +152,7 @@ open class CSSRule: RulesContent, CSSRulable {
     }
 }
 
+@MainActor
 public protocol CSSRulable {}
 
 extension BaseElement: CSSRulable {}

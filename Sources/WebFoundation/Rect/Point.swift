@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class Point: InnerStateChangeable, Equatable, CustomStringConvertible {
+public final class Point: InnerStateChangeable, @preconcurrency Equatable, @preconcurrency CustomStringConvertible {
     @State public var x: Double = 0
     @State public var y: Double = 0
     

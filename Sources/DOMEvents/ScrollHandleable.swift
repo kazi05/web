@@ -8,6 +8,7 @@
 import Foundation
 import JavaScriptKit
 
+@MainActor
 public protocol ScrollHandleable: DOMEventable {
     @discardableResult
     func onScroll(_ handler: @escaping () -> Void) -> Self

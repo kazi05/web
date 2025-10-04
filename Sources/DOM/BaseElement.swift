@@ -8,7 +8,7 @@
 import WebFoundation
 import Events
 
-open class BaseElement: DOMElement, DOMContent, DOMEventsBaseScope, EventTarget, Equatable, Hashable, CustomStringConvertible {
+open class BaseElement: DOMElement, DOMContent, DOMEventsBaseScope, EventTarget, @preconcurrency Equatable, @preconcurrency Hashable, @preconcurrency CustomStringConvertible {
     // MARK: Storageable
     
     public lazy var storage: Storage = .init()
@@ -17,7 +17,9 @@ open class BaseElement: DOMElement, DOMContent, DOMEventsBaseScope, EventTarget,
     public private(set) lazy var properties: DOMElementProperties = .init()
     
     deinit {
-        storage.shutdown()
+        MainActor.assumeIsolated {
+            storage.shutdown()
+        }
     }
     
     // MARK: DOMContent
@@ -230,6 +232,7 @@ open class BaseElement: DOMElement, DOMContent, DOMEventsBaseScope, EventTarget,
 // MARK: CustomStringConvertible
 
 extension Array: CustomStringConvertible where Element == BaseElement {
+    @MainActor
     public var description: String {
         "[\(self.map { $0.description }.joined(separator: ", "))]"
     }
